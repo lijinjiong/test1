@@ -8,6 +8,7 @@ use common\models\search\BannerSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * BannerController implements the CRUD actions for Banner model.
@@ -64,10 +65,17 @@ class BannerController extends Controller
     public function actionCreate()
     {
         $model = new Banner();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index', 'id' => $model->id]);
-        } else {
+        if ($model->load(Yii::$app->request->post()) ) {
+            $model->img = UploadedFile::getInstance($model, 'img');
+            $model->img->saveAs($url='img/banner/' . date("YmdHis").$model->img->baseName . '.' . $model->img->extension);
+            $model->banner_img = "/".$url;
+            if ($model->save(false)) {
+                Yii::$app->getSession()->setFlash('success', '创建成功');
+                return $this->redirect(['index', 'id' => $model->id]);
+            } else {
+                Yii::$app->getSession()->setFlash('error', '创建失败');
+            }
+        }else{
             return $this->render('create', [
                 'model' => $model,
             ]);
@@ -83,11 +91,20 @@ class BannerController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
+        if ($model->load(Yii::$app->request->post())) {
+            $model->img = UploadedFile::getInstance($model, 'img');
+            if($model->img){
+            $model->img->saveAs($url='img/banner/' . date("YmdHis").$model->img->baseName . '.' . $model->img->extension);
+            $model->banner_img = "/".$url;
+            }
+            if ($model->save(false)) {
+                Yii::$app->getSession()->setFlash('success', '修改成功');
+                return $this->redirect(['index', 'id' => $model->id]);
+            } else {
+                Yii::$app->getSession()->setFlash('error', '修改失败');
+            }
+        }else{
+            return $this->render('create', [
                 'model' => $model,
             ]);
         }

@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\search\BannerSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Banners';
+$this->title = '广告';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="banner-index">
@@ -16,24 +16,45 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Banner', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('新增广告', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn',
-                'header'=>'序号'
+                'header' => '序号'
+            ],
+            ['attribute' =>'id',
+                'filter' =>false,
+            ],
+            /*   'banner_img',*/
+            [
+                'format' => [
+                    'image',
+                    [
+                        'height' => 50,
+                        'width' => 100
+                    ]
+                ],
+                'label' => '图片',
+                'value' => function ($model) {
+                    return $model->banner_img;
+                }
 
             ],
-           /* 'id',*/
-            'banner_img',
             'banner_url:url',
-            'banner_type',
+            [
+                'label' => '广告类型',
+                'attribute' => 'banner_type',
+                'value' => function ($model) {
+                    return Yii::$app->params["BANNER_TYPE"][$model->banner_type];
+                },
+                'filter' =>Yii::$app->params["BANNER_TYPE"],
+            ],
 
             ['class' => 'yii\grid\ActionColumn',
-                "header"=>"操作"
-
+                "header" => "操作"
             ],
         ],
     ]); ?>
