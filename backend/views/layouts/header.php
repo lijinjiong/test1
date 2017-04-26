@@ -34,12 +34,12 @@ use yii\helpers\Html;
                                  alt="User Image"/>
 
                             <p>
-                                Alexander Pierce - Web Developer
-                                <small>Member since Nov. 2012</small>
+                               <?=date("Y 年 m 月 d 日")?>
+                                <small</small>
                             </p>
                         </li>
                         <!-- Menu Body -->
-                        <li class="user-body">
+                       <!-- <li class="user-body">
                             <div class="col-xs-4 text-center">
                                 <a href="#">Followers</a>
                             </div>
@@ -49,7 +49,7 @@ use yii\helpers\Html;
                             <div class="col-xs-4 text-center">
                                 <a href="#">Friends</a>
                             </div>
-                        </li>
+                        </li>-->
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
