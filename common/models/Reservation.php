@@ -46,14 +46,15 @@ class Reservation extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => '预约姓名',
-            'name' => 'Name',
+            'id' => '预约ID',
+            'name' => '预约人',
             'mobile' => '预约手机号',
             'referrer' => '推荐人',
             'doc_id' => '医生id',
             'note' => '备注',
             'add_time' => '添加时间',
             'reservation_time' => '预约时间',
+            'status' => '状态',
         ];
     }
 }

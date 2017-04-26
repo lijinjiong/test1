@@ -6,5 +6,9 @@ return [
     "BANNER_TYPE"=>[
         1=>"电脑端",
         2=>"手机端",
-    ]
+    ],
+    "RESERVATION_STATUS"=>[
+        1=>"已处理",
+        2=>"未处理",
+    ],
 ];

@@ -18,7 +18,7 @@ class ReservationSearch extends Reservation
     public function rules()
     {
         return [
-            [['id', 'doc_id', 'add_time', 'reservation_time'], 'integer'],
+            [['id', 'doc_id', 'add_time', 'reservation_time',"status"], 'integer'],
             [['name', 'mobile', 'referrer', 'note'], 'safe'],
         ];
     }
@@ -60,6 +60,7 @@ class ReservationSearch extends Reservation
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'status' => $this->status,
             'doc_id' => $this->doc_id,
             'add_time' => $this->add_time,
             'reservation_time' => $this->reservation_time,
