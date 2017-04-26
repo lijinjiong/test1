@@ -19,7 +19,7 @@ class ReservationSearch extends Reservation
     {
         return [
             [['id', 'doc_id', 'add_time', 'reservation_time'], 'integer'],
-            [['name', 'mobile', 'referrer', 'note'], 'safe'],
+            [['name', 'mobile', 'referrer', 'note','status'], 'safe'],
         ];
     }
 
@@ -61,6 +61,7 @@ class ReservationSearch extends Reservation
         $query->andFilterWhere([
             'id' => $this->id,
             'doc_id' => $this->doc_id,
+            'status' => $this->status,
             'add_time' => $this->add_time,
             'reservation_time' => $this->reservation_time,
         ]);

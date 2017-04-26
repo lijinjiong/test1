@@ -39,8 +39,14 @@ class Reservation extends \yii\db\ActiveRecord
             [['note'], 'string', 'max' => 255],
         ];
     }
+/*
+ * 获取医生姓名
+ */
+public function getDoctor(){
+     return $this->hasOne(Doctor::className(), ['id' => 'doc_id']);
+}
 
-    /**
+/**
      * @inheritdoc
      */
     public function attributeLabels()
@@ -54,6 +60,7 @@ class Reservation extends \yii\db\ActiveRecord
             'note' => '备注',
             'add_time' => '添加时间',
             'reservation_time' => '预约时间',
+            'status'=>'处理状态'
         ];
     }
 }
