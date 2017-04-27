@@ -13,6 +13,7 @@ use Yii;
  */
 class HospitalRegion extends \yii\db\ActiveRecord
 {
+    public $district;
     /**
      * @inheritdoc
      */
@@ -27,9 +28,9 @@ class HospitalRegion extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['region_id', 'region_name'], 'required'],
-            [['region_id'], 'integer'],
-            [['region_name'], 'string', 'max' => 255],
+            [["province", 'city'], 'required',],
+            [["province", 'city'], 'integer'],
+
         ];
     }
 
@@ -40,8 +41,8 @@ class HospitalRegion extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'region_id' => 'Region ID',
-            'region_name' => 'Region Name',
+            'province' => '省份',
+            'city' => '城市',
         ];
     }
 }

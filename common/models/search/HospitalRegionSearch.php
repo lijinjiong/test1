@@ -18,8 +18,8 @@ class HospitalRegionSearch extends HospitalRegion
     public function rules()
     {
         return [
-            [['id', 'region_id'], 'integer'],
-            [['region_name'], 'safe'],
+            [['id'], 'integer'],
+            [['province_name'], 'safe'],
         ];
     }
 
@@ -47,7 +47,11 @@ class HospitalRegionSearch extends HospitalRegion
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
         ]);
+
 
         $this->load($params);
 
@@ -60,10 +64,8 @@ class HospitalRegionSearch extends HospitalRegion
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'region_id' => $this->region_id,
         ]);
 
-        $query->andFilterWhere(['like', 'region_name', $this->region_name]);
 
         return $dataProvider;
     }

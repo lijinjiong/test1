@@ -22,12 +22,26 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            ['class' => 'yii\grid\SerialColumn',
+            "header"=>"序号"
+            ],
 
-            'id',
-            'region_id',
             'name',
-            'type',
+            [
+                "label"=>"地区",
+                "value"=>function($model){
+                    return \common\models\Region::getName($model->region_id);
+                }
+            ],
+
+            [
+                'label' => '医院分类',
+                'attribute' => 'type',
+                'value' => function ($model) {
+                    return Yii::$app->params["HOSPITAL_TYPE"][$model->type];
+                },
+                'filter' =>Yii::$app->params["HOSPITAL_TYPE"],
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
