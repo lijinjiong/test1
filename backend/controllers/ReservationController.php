@@ -8,7 +8,8 @@ use common\models\search\ReservationSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 /**
  * ReservationController implements the CRUD actions for Reservation model.
  */
@@ -66,7 +67,7 @@ class ReservationController extends Controller
         $model = new Reservation();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -85,13 +86,37 @@ class ReservationController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
             ]);
         }
     }
+    
+//    处理
+    public function actionHandle($id){
+        $model = $this->findModel($id);
+       
+        if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
+          
+            return $this->redirect(['index', 'id' => $model->id]);
+        } else {
+            return $this->renderAjax('handle', [
+                'model' => $model,
+            ]);
+        }
+        
+    }
+    
+//    public function actionValidateForm () 
+//{
+//    // 注意这里实例化是你对应的model
+//    $model = new Reservation();
+//    $model->load(Yii::$app->request->post()); 
+//    Yii::$app->response->format = Response::FORMAT_JSON; 
+//    return ActiveForm::validate($model);  
+//}
 
     /**
      * Deletes an existing Reservation model.

@@ -51,7 +51,12 @@ $this->params['breadcrumbs'][] = $this->title;
                'template' => ' {handle}{view}{edit} {delete} ',
                 'buttons' => [
                      'handle' => function ($url, $model, $key) {
-                        return Html::a('处理', ['handle', 'id' => $key], ['class' => 'btn btn-info btn-xs',]
+                        return Html::a('处理', ['handle'], [
+                        'class' => 'btn btn-success btn-info btn-xs handle',
+                        'id' => 'handle', // 按钮的id随意
+                        'data-toggle' => 'modal', // 固定写法
+                        'data-target' => '#operate-modal', // 等于4.1begin中设定的参数id值
+                        ]
                         );
                     },
                     'view' => function ($url, $model, $key) {
@@ -75,3 +80,26 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 </div>
+<?php
+use yii\bootstrap\Modal;
+Modal::begin([
+    'id' => 'operate-modal',
+    'header' => '<h4 class="modal-title"></h4>',
+]); 
+Modal::end();
+use yii\helpers\Url;
+// 创建
+$requestUpdateUrl = Url::toRoute('handle');
+$js = <<<JS
+// 创建操作
+$('.handle').on('click', function () {
+    $('.modal-title').html('操作');
+    $.get('{$requestUpdateUrl}', { id: $(this).closest('tr').data('key') },
+        function (data) {
+            $('.modal-body').html(data);
+        }  
+    );
+});
+JS;
+$this->registerJs($js);
+?>
