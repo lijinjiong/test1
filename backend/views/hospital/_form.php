@@ -9,7 +9,7 @@ use yii\widgets\ActiveForm;
 ?>
 <style>
     .hide{display: none;  }
-    .botton-m{margin-bottom:110px; }
+    .botton-m{margin-bottom:20px; }
 </style>
 <div class="hospital-form">
 
@@ -41,7 +41,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'type')->dropDownList(Yii::$app->params["HOSPITAL_TYPE"]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? '新增' : '修改', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

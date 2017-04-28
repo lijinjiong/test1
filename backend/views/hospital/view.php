@@ -15,11 +15,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('更新', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('删除', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => '你确定要删除吗?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -29,9 +29,20 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'region_id',
             'name',
-            'type',
+            [
+                "label"=>"地区",
+                "value"=>function($model){
+                    return \common\models\Region::getName($model->region_id);
+                }
+            ],
+            [
+                'label' => '医院分类',
+                'attribute' => 'type',
+                'value' => function ($model) {
+                    return Yii::$app->params["HOSPITAL_TYPE"][$model->type];
+                },
+            ],
         ],
     ]) ?>
 
