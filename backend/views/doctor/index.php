@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use common\models\Department;
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\search\DoctorSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -26,13 +26,25 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'username',
-            'sex',
+            [
+                'label'=>'性别',
+                'attribute' => 'sex',
+                'value'=>function($model){
+                    return yii::$app->params['SEX'][$model->sex];
+                },
+                'filter' => yii::$app->params['SEX'],
+            ],
+//            'sex',
             'email:email',
             'id_card',
-            // 'bank_card',
-            // 'bank_name',
-            // 'open_bank',
-            // 'department_id',
+            [
+                'label'=>'科室',
+                'attribute'=>'dep_name',
+                'value'=>function($model){
+                     return isset($model->department->dep_name)?$model->department->dep_name:"";
+                },
+            ],
+//             'department_id',
             // 'skill_disease',
             // 'id_card_front',
             // 'id_card_back',
@@ -52,7 +64,15 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'practice_experience',
             // 'academic_post',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+             'header'=>'操作',
+            ],
+        ],
+         'pager' => [
+            'firstPageLabel' => "首页",
+            'prevPageLabel' => '上一页',
+            'nextPageLabel' => '下一页',
+            'lastPageLabel' => '最后一页',
         ],
     ]); ?>
 </div>

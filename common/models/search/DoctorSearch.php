@@ -15,12 +15,14 @@ class DoctorSearch extends Doctor
     /**
      * @inheritdoc
      */
+    public $dep_name;
     public function rules()
     {
         return [
             [['id', 'sex', 'department_id', 'add_time', 'verify_time', 'status', 'show_index', 'mobile', 'age', 'province_id', 'city_id', 'area_id'], 'integer'],
             [['username', 'email', 'id_card', 'bank_card', 'bank_name', 'open_bank', 'skill_disease', 'id_card_front', 'id_card_back', 'doc_certification', 'practicing_certificate', 'highest_professional', 'address', 'practice_experience', 'academic_post'], 'safe'],
-        ];
+            [['dep_name'], 'safe'],
+            ];
     }
 
     /**
@@ -42,11 +44,14 @@ class DoctorSearch extends Doctor
     public function search($params)
     {
         $query = Doctor::find();
-
+        $query->joinWith(['department']);
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+             'pagination' => [
+            'pageSize' => 10,
+            ],
         ]);
 
         $this->load($params);
@@ -88,7 +93,7 @@ class DoctorSearch extends Doctor
             ->andFilterWhere(['like', 'address', $this->address])
             ->andFilterWhere(['like', 'practice_experience', $this->practice_experience])
             ->andFilterWhere(['like', 'academic_post', $this->academic_post]);
-
+         $query->andFilterWhere(['like', '{{%department}}.dep_name', $this->dep_name]) ;
         return $dataProvider;
     }
 }
