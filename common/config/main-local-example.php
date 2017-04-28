@@ -3,11 +3,11 @@ return [
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=192.168.1.165;dbname=xinlian',
+            'dsn' => 'mysql:host=localhost;dbname=xinlian',
             'username' => 'root',
             'password' => 'root',
-            'tablePrefix' =>'xl_',
             'charset' => 'utf8',
+            'tablePrefix' => 'xl_'
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
