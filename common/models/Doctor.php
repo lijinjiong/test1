@@ -59,7 +59,7 @@ class Doctor extends \yii\db\ActiveRecord
     {
         return [
             [['username', 'id_card', 'department_id', 'skill_disease', 'add_time', 'status'], 'required'],
-            [['sex', 'department_id', 'add_time', 'verify_time', 'status', 'show_index', 'mobile', 'age', 'province_id', 'city_id', 'area_id'], 'integer'],
+            [['sex', 'department_id', 'add_time', 'verify_time', 'status', 'show_index', 'mobile', 'age', 'province', 'city', 'district'], 'integer'],
             [['username', 'bank_name'], 'string', 'max' => 20],
             [['email'], 'string', 'max' => 25],
             [['id_card'], 'string', 'max' => 18],
@@ -97,9 +97,9 @@ class Doctor extends \yii\db\ActiveRecord
             'show_index' => '是否显示在首页',
             'mobile' => '手机号',
             'age' => '年龄',
-            'province_id' => '省id',
-            'city_id' => '城市id',
-            'area_id' => '区id',
+            'province' => '省id',
+            'city' => '城市id',
+            'district' => '区id',
             'address' => '街道地址',
             'practice_experience' => '执业经历',
             'academic_post' => '学术任职',

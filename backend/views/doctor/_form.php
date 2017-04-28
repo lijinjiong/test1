@@ -26,13 +26,13 @@ use kartik\date\DatePicker;
 
     <?= $form->field($model, 'open_bank')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'department_id')->dropDownList() ?>
+    <?= $form->field($model, 'department_id')->dropDownList($departmentList) ?>
 
     <?= $form->field($model, 'skill_disease')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'id_card_front')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'id_card_front')->fileInput()->hint('请选择身份证正面照片')->label('身份证正面') ?>
 
-    <?= $form->field($model, 'id_card_back')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'id_card_back')->fileInput()->hint('请选择身份证反面照片')->label('身份证反面') ?>
 
     <?= $form->field($model, 'doc_certification')->textInput(['maxlength' => true]) ?>
 
@@ -48,11 +48,27 @@ use kartik\date\DatePicker;
 
     <?= $form->field($model, 'age')->textInput() ?>
 
-    <?= $form->field($model, 'province_id')->textInput() ?>
-
-    <?= $form->field($model, 'city_id')->textInput() ?>
-
-    <?= $form->field($model, 'area_id')->textInput() ?>
+      <?= $form->field($model, 'city')->widget(\chenkby\region\Region::className(),[
+        'model'=>$model,
+        'url'=> \yii\helpers\Url::toRoute(['get-region']),
+        'province'=>[
+            'attribute'=>'province',
+            'items'=>\common\models\Region::getRegion(),
+            'options'=>['class'=>'form-control botton-m form-control-inline','prompt'=>'选择省份']
+        ],
+          
+          
+        'city'=>[
+            'attribute'=>'city',
+            'items'=>\common\models\Region::getRegion($model['province']),
+            'options'=>['class'=>'form-control form-control-inline','prompt'=>'选择城市']
+        ],
+        'district'=>[
+            'attribute'=>'district',
+            'items'=>\common\models\Region::getRegion($model['city']),
+            'options'=>['class'=>'form-control hide  form-control-inline','prompt'=>'选择县/区']
+        ]
+    ])->label("所在地区");?>
 
     <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
 

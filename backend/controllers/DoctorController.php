@@ -9,6 +9,9 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\models\Department;
+use chenkby\region\RegionAction;
+use common\models\Region;
+use yii\web\UploadedFile;
 /**
  * DoctorController implements the CRUD actions for Doctor model.
  */
@@ -33,6 +36,15 @@ class DoctorController extends Controller
      * Lists all Doctor models.
      * @return mixed
      */
+        public function actions()
+    {
+        $actions=parent::actions();
+        $actions['get-region']=[
+            'class'=>RegionAction::className(),
+            'model'=>Region::className()
+        ];
+        return $actions;
+    }
     public function actionIndex()
     {
         $searchModel = new DoctorSearch();
@@ -66,12 +78,23 @@ class DoctorController extends Controller
         $model = new Doctor();
 //        查询所有科室
         $department=new Department();
+        $departmentList=$department::find()->select('dep_name,id')->indexBy("id")->column();
         $model->add_time= time();
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->img = UploadedFile::getInstance($model, 'img');
+            $model->img->saveAs($url='img/banner/' . date("YmdHis").$model->img->baseName . '.' . $model->img->extension);
+            $model->banner_img = "/".$url; 
+            if ($model->save(false)){
+                 Yii::$app->getSession()->setFlash('success', '创建成功');
+                return $this->redirect(['index', 'id' => $model->id]);
+            } else {
+                 Yii::$app->getSession()->setFlash('error', '创建失败');
+            }
+            
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'departmentList'=>$departmentList,
             ]);
         }
     }
@@ -85,12 +108,14 @@ class DoctorController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $department=new Department();
+        $departmentList=$department::find()->select('id,dep_name')->asArray()->all();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'departmentList'=>$departmentList,
             ]);
         }
     }

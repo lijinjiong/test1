@@ -19,7 +19,7 @@ class DoctorSearch extends Doctor
     public function rules()
     {
         return [
-            [['id', 'sex', 'department_id', 'add_time', 'verify_time', 'status', 'show_index', 'mobile', 'age', 'province_id', 'city_id', 'area_id'], 'integer'],
+            [['id', 'sex', 'department_id', 'add_time', 'verify_time', 'status', 'show_index', 'mobile', 'age', 'province', 'city', 'district'], 'integer'],
             [['username', 'email', 'id_card', 'bank_card', 'bank_name', 'open_bank', 'skill_disease', 'id_card_front', 'id_card_back', 'doc_certification', 'practicing_certificate', 'highest_professional', 'address', 'practice_experience', 'academic_post'], 'safe'],
             [['dep_name'], 'safe'],
             ];
@@ -73,9 +73,9 @@ class DoctorSearch extends Doctor
             'show_index' => $this->show_index,
             'mobile' => $this->mobile,
             'age' => $this->age,
-            'province_id' => $this->province_id,
-            'city_id' => $this->city_id,
-            'area_id' => $this->area_id,
+            'province' => $this->province,
+            'city' => $this->city,
+            'district' => $this->district,
         ]);
 
         $query->andFilterWhere(['like', 'username', $this->username])

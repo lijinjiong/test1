@@ -9,7 +9,7 @@ use yii\widgets\ActiveForm;
 ?>
 <style>
     .hide{display: none;  }
-    .botton-m{margin-bottom:20px; }
+    .botton-m{margin-bottom:110px; }
 </style>
 <div class="hospital-form">
 
@@ -23,10 +23,11 @@ use yii\widgets\ActiveForm;
             'items'=>\common\models\Region::getRegion(),
             'options'=>['class'=>'form-control botton-m form-control-inline','prompt'=>'选择省份']
         ],
+        
         'city'=>[
             'attribute'=>'city',
             'items'=>\common\models\Region::getRegion($model['province']),
-            'options'=>['class'=>'form-control form-control-inline','prompt'=>'选择城市']
+            'options'=>['class'=>'form-control botton-m form-control-inline','prompt'=>'选择城市']
         ],
         'district'=>[
             'attribute'=>'district',
