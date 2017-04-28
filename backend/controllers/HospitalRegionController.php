@@ -2,9 +2,11 @@
 
 namespace backend\controllers;
 
+use chenkby\region\RegionAction;
+use common\models\Region;
 use Yii;
 use common\models\HospitalRegion;
-use common\models\search\HospitalRegion as HospitalRegionSearch;
+use common\models\search\HospitalRegionSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -29,6 +31,15 @@ class HospitalRegionController extends Controller
         ];
     }
 
+    public function actions()
+    {
+        $actions=parent::actions();
+        $actions['get-region']=[
+            'class'=>RegionAction::className(),
+            'model'=>Region::className()
+        ];
+        return $actions;
+    }
     /**
      * Lists all HospitalRegion models.
      * @return mixed
@@ -63,11 +74,24 @@ class HospitalRegionController extends Controller
      */
     public function actionCreate()
     {
-        $model = new HospitalRegion();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $model = new HospitalRegion();
+        if ($model->load(Yii::$app->request->post()) && $model->validate("city,province")) {
+            if($model->save(false)){
+                Yii::$app->getSession()->setFlash("success","新建成功");
+                return $this->redirect(['view', 'id' => $model->id]);
+            }else{
+                Yii::$app->getSession()->setFlash('error', '创建失败');
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
+
         } else {
+            if(!empty($model->getFirstErrors())){
+                Yii::$app->getSession()->setFlash('error', current($model->getFirstErrors()));
+            }
+
             return $this->render('create', [
                 'model' => $model,
             ]);

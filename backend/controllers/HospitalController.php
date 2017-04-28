@@ -2,6 +2,8 @@
 
 namespace backend\controllers;
 
+use chenkby\region\RegionAction;
+use common\models\Region;
 use Yii;
 use common\models\Hospital;
 use common\models\search\HospitalSearch;
@@ -29,6 +31,15 @@ class HospitalController extends Controller
         ];
     }
 
+    public function actions()
+    {
+        $actions=parent::actions();
+        $actions['get-region']=[
+            'class'=>RegionAction::className(),
+            'model'=>Region::className()
+        ];
+        return $actions;
+    }
     /**
      * Lists all Hospital models.
      * @return mixed
@@ -65,8 +76,20 @@ class HospitalController extends Controller
     {
         $model = new Hospital();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->validate()){
+                $model->region_id= $model->city;
+                if($model->save(false)){
+                    Yii::$app->getSession()->setFlash("success","新增成功");
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }else{
+                    Yii::$app->getSession()->setFlash("error","新增失败");
+                }
+
+            }else{
+                Yii::$app->getSession()->setFlash("error",current($model->getFirstErrors()));
+            }
+
         } else {
             return $this->render('create', [
                 'model' => $model,
