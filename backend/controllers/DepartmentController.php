@@ -35,9 +35,9 @@ class DepartmentController extends Controller
      */
     public function actionIndex()
     {
+
         $searchModel = new DepartmentSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -65,7 +65,20 @@ class DepartmentController extends Controller
     {
         $model = new Department();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->parent_id==0){
+                $model->dep_type=1;
+            }else{
+                $model->dep_type=2;
+            }
+            if( $model->save(false)){
+                Yii::$app->getSession()->setFlash("success","新增成功");
+            }else{
+                Yii::$app->getSession()->setFlash("error","保存失败");
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -84,7 +97,20 @@ class DepartmentController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->parent_id==0){
+                $model->dep_type=1;
+            }else{
+                $model->dep_type=2;
+            }
+            if( $model->save()){
+                Yii::$app->getSession()->setFlash("success","新增成功");
+            }else{
+                Yii::$app->getSession()->setFlash("error","保存失败");
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [

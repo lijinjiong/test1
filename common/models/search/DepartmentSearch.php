@@ -41,7 +41,7 @@ class DepartmentSearch extends Department
      */
     public function search($params)
     {
-        $query = Department::find();
+        $query = Department::find()->with("parent");
 
         // add conditions that should always apply here
 

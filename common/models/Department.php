@@ -34,6 +34,9 @@ class Department extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getParent(){
+       return $this->hasOne(Department::className(),["id"=>"parent_id"]);
+    }
     /**
      * @inheritdoc
      */
