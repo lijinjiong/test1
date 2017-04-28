@@ -8,7 +8,7 @@ use common\models\search\DoctorSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use common\models\Department;
 /**
  * DoctorController implements the CRUD actions for Doctor model.
  */
@@ -64,9 +64,11 @@ class DoctorController extends Controller
     public function actionCreate()
     {
         $model = new Doctor();
-
+//        查询所有科室
+        $department=new Department();
+        $model->add_time= time();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -85,7 +87,7 @@ class DoctorController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -93,6 +95,21 @@ class DoctorController extends Controller
         }
     }
 
+      
+//    处理
+    public function actionHandle($id){
+        $model = $this->findModel($id);
+        $model->verify_time= time();
+        if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
+          
+            return $this->redirect(['index', 'id' => $model->id]);
+        } else {
+            return $this->renderAjax('handle', [
+                'model' => $model,
+            ]);
+        }
+        
+    }
     /**
      * Deletes an existing Doctor model.
      * If deletion is successful, the browser will be redirected to the 'index' page.

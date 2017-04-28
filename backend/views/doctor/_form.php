@@ -2,19 +2,19 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+use kartik\date\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model common\models\Doctor */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-
+ 
 <div class="doctor-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'sex')->textInput() ?>
+    <?= $form->field($model, 'sex')->dropDownList(yii::$app->params['SEX']) ?>
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
@@ -26,7 +26,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'open_bank')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'department_id')->textInput() ?>
+    <?= $form->field($model, 'department_id')->dropDownList() ?>
 
     <?= $form->field($model, 'skill_disease')->textInput(['maxlength' => true]) ?>
 
@@ -39,14 +39,10 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'practicing_certificate')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'highest_professional')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'add_time')->textInput() ?>
-
-    <?= $form->field($model, 'verify_time')->textInput() ?>
-
-    <?= $form->field($model, 'status')->textInput() ?>
-
-    <?= $form->field($model, 'show_index')->textInput() ?>
+<?php if(!$model->isNewRecord){?>
+     <?= $form->field($model, 'show_index')->dropDownList(yii::$app->params['show_index']) ?>
+<?PHP }?>
+   
 
     <?= $form->field($model, 'mobile')->textInput() ?>
 

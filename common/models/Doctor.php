@@ -94,7 +94,7 @@ class Doctor extends \yii\db\ActiveRecord
             'add_time' => '添加时间',
             'verify_time' => '审核时间',
             'status' => '0待审核1 审核通过2 不通过',
-            'show_index' => '0不显示1显示',
+            'show_index' => '是否显示在首页',
             'mobile' => '手机号',
             'age' => '年龄',
             'province_id' => '省id',
