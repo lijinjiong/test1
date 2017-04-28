@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+//            'id',
             'username',
             [
                 'label'=>'性别',
@@ -44,6 +44,22 @@ $this->params['breadcrumbs'][] = $this->title;
                      return isset($model->department->dep_name)?$model->department->dep_name:"";
                 },
             ],
+               [
+                'label'=>'审核状态',
+                'attribute'=>'status',
+                'value'=>function($model){
+                     return yii::$app->params['DOCTOR_STATUS'][$model->status];
+                },
+                'filter' => yii::$app->params['DOCTOR_STATUS'],
+            ],
+            [
+                'label'=>'是否展示',
+                'attribute'=>'show_index',
+                 'value'=>function($model){
+                     return yii::$app->params['show_index'][$model->show_index];
+                },
+                'filter' => yii::$app->params['show_index'],
+            ],
 //             'department_id',
             // 'skill_disease',
             // 'id_card_front',
@@ -53,8 +69,6 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'highest_professional',
             // 'add_time:datetime',
             // 'verify_time:datetime',
-            // 'status',
-            // 'show_index',
             // 'mobile',
             // 'age',
             // 'province_id',
@@ -64,9 +78,36 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'practice_experience',
             // 'academic_post',
 
-            ['class' => 'yii\grid\ActionColumn',
-             'header'=>'操作',
-            ],
+                ['class' => 'yii\grid\ActionColumn',
+                'header'=>'操作',
+               'template' => ' {handle}{view}{edit} {delete} ',
+                'buttons' => [
+                     'handle' => function ($url, $model, $key) {
+                        return Html::a('处理', ['handle','id'=>$key], [
+                        'class' => 'btn btn-success btn-info btn-xs handle',
+                        'data-toggle' => 'modal', // 固定写法
+                        'data-target' => '#operate-modal', // 等于4.1begin中设定的参数id值
+                        ]
+                        );
+                    },
+                    'view' => function ($url, $model, $key) {
+                        return Html::a('预览', ['view', 'id' => $key], ['class' => 'btn btn-info btn-xs', ]
+                        );
+                    },
+                   
+                    'edit' => function ($url, $model, $key) {
+                        return Html::a('编辑', ['update', 'id' => $key], ['class' => 'btn btn-info btn-xs',]);
+                    },
+                    'delete' => function ($url, $model, $key) {
+                        return Html::a('删除', ['delete', 'id' => $key],  [
+                                    'class' => 'btn btn-info btn-xs',
+                                   
+                                    'data' => ['confirm' => '删除医生记录,是否继续操作？','method'=>'post']
+                                ]);
+                    },
+                ],
+
+                ],
         ],
          'pager' => [
             'firstPageLabel' => "首页",
@@ -76,3 +117,26 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 </div>
+<?php
+use yii\bootstrap\Modal;
+Modal::begin([
+    'id' => 'operate-modal',
+    'header' => '<h4 class="modal-title"></h4>',
+]); 
+Modal::end();
+use yii\helpers\Url;
+// 创建
+$requestUpdateUrl = Url::toRoute('handle');
+$js = <<<JS
+// 创建操作
+$('.handle').on('click', function () {
+    $('.modal-title').html('操作');
+    $.get('{$requestUpdateUrl}', { id: $(this).closest('tr').data('key') },
+        function (data) {
+            $('.modal-body').html(data);
+        }  
+    );
+});
+JS;
+$this->registerJs($js);
+?>
