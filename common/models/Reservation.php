@@ -32,7 +32,7 @@ class Reservation extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'mobile', 'referrer', 'doc_id', 'add_time'], 'required'],
+            [['name', 'mobile', 'referrer', 'doc_id', 'add_time','status'], 'required'],
             [['doc_id', 'add_time', 'reservation_time'], 'integer'],
             [['name', 'referrer'], 'string', 'max' => 20],
             [['mobile'], 'string', 'max' => 11],
