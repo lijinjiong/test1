@@ -48,6 +48,13 @@ class Doctor extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    
+    /*
+     * 获取科室名称
+     */
+    public function getDepartment(){
+        return $this->hasOne(Department::className(), ['id' => 'department_id']);
+    }
     public function rules()
     {
         return [
@@ -70,8 +77,8 @@ class Doctor extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'username' => 'Username',
-            'sex' => '1男2女',
+            'username' => '姓名',
+            'sex' => '性别',
             'email' => 'Email',
             'id_card' => '身份证号',
             'bank_card' => '银行卡号',
