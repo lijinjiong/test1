@@ -55,6 +55,9 @@ class Doctor extends \yii\db\ActiveRecord
     public function getDepartment(){
         return $this->hasOne(Department::className(), ['id' => 'department_id']);
     }
+    public function getCity(){
+        return $this->hasOne(Region::className(), ['id' => 'city']);
+    }
     public function rules()
     {
         return [
@@ -104,7 +107,7 @@ class Doctor extends \yii\db\ActiveRecord
             'practice_experience' => '执业经历',
             'academic_post' => '学术任职',
             'hospital_id'=>'医院ID',
-            "hospital_name"=>"医院名称",
+            "hospital"=>"医院名称",
         ];
     }
 }

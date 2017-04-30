@@ -11,6 +11,6 @@ class SiteController extends ControllerBase {
     public function actionIndex(){
 
 
-     return array_keys(Department::find()->select("id")->indexBy("id")->asArray()->all());
+     return  [0=>"最高级"]+\common\models\Department::find()->where(["parent_id"=>0])->andWhere(["!=","id",3])->indexBy("id")->select("dep_name,id")->column();
     }
 }

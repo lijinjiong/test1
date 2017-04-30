@@ -53,7 +53,7 @@ public function getDoctor(){
     {
         return [
             'id' => '预约姓名',
-            'name' => 'Name',
+            'name' => '预约姓名',
             'mobile' => '预约手机号',
             'referrer' => '推荐人',
             'doc_id' => '医生id',

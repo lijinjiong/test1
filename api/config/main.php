@@ -54,6 +54,7 @@ return [
             'showScriptName' => false,
             'enableStrictParsing' => true,
             'rules' => [
+                '<controller>/<action>'=>'<controller>/<action>',
             ],
         ],
 

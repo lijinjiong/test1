@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'dep_name')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'parent_id')->label("父级")->hint("请选择父级")->dropDownList(
-        [0=>"最高级"]+\common\models\Department::find()->where(["parent_id"=>0])->andWhere(["!=","id",$model->id])->indexBy("id")->select("dep_name,id")->column()
+        [0=>"最高级"]+\common\models\Department::find()->where(["parent_id"=>0])->andFilterWhere(["!=","id",$model->id])->indexBy("id")->select("dep_name,id")->column()
     ) ?>
 
     <?/*= $form->field($model, 'dep_type')->textInput() */?>

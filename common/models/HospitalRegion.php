@@ -14,6 +14,7 @@ use Yii;
 class HospitalRegion extends \yii\db\ActiveRecord
 {
     public $district;
+
     /**
      * @inheritdoc
      */
@@ -37,6 +38,31 @@ class HospitalRegion extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    /*获取筛选城市的地区 id name*/
+    public static function getCityRegion()
+    {
+        $region = HospitalRegion::find()
+            ->select("id,city")
+            ->with("city")
+            ->asArray()
+            ->all();
+        $data=[];
+        if (!empty($region)) {
+            foreach ($region as $k => $v) {
+            $data[$k]["id"]=$v["city"]["id"];
+            $data[$k]["name"]=$v["city"]["name"];
+            }
+        }
+        return $data;
+    }
+
+    /*关联城市*/
+    public function getCity()
+    {
+        return $this->hasOne(Region::className(), ["id" => "city"]);
+    }
+
+
     public function attributeLabels()
     {
         return [

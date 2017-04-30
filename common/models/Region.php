@@ -93,6 +93,7 @@ class Region extends \yii\db\ActiveRecord {
         $result = static::find()->where(['parent_id'=>$parentId])->asArray()->all();
         return ArrayHelper::map($result, 'id', 'name');
     }
+
     /*根据id找名字*/
     public static function getName($id){
         $region=self::find()->where(["id"=>$id])->one();
