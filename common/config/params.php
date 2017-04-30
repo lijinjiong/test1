@@ -44,4 +44,6 @@ return [
         2=>"二级",
         3=>"三级",
     ],
+    //心联后台地址
+    "XINLIAN_BACK"=>"http://xinlian.com/",
 ];
