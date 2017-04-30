@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('新增预约', ['create'], ['class' => 'btn btn-success']) ?>
+      <!--  --><?/*= Html::a('新增预约', ['create'], ['class' => 'btn btn-success']) */?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -29,10 +29,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'mobile',
             'referrer',
             [
+                'label'=>'添加时间',
+                'attribute' => 'add_time',
+                'format' => ['date', 'Y-m-d H:i:s'],
+            ],
+            [
                 'label'=>'医生',
                 'attribute' => 'doc_id',
                 'value'=>function($model){
-                  return isset($model->doctor->username);
+                  return isset($model->doctor->username)?$model->doctor->username:"未知";
                 }
             ],
             [
@@ -43,9 +48,6 @@ $this->params['breadcrumbs'][] = $this->title;
              }
             ],
              'note',
-            // 'add_time:datetime',
-            // 'reservation_time:datetime',
-
             ['class' => 'yii\grid\ActionColumn',
              'header'=>'操作',
                'template' => ' {handle}{view}{edit} {delete} ',
@@ -70,7 +72,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'delete' => function ($url, $model, $key) {
                         return Html::a('删除', ['delete', 'id' => $key],  [
                                     'class' => 'btn btn-info btn-xs',
-                                   
                                     'data' => ['confirm' => '删除部门,是否继续操作？','method'=>'post']
                                 ]);
                     },

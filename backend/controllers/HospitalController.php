@@ -81,7 +81,7 @@ class HospitalController extends Controller
                 $model->region_id= $model->city;
                 if($model->save(false)){
                     Yii::$app->getSession()->setFlash("success","新增成功");
-                    return $this->redirect(['view', 'id' => $model->id]);
+                    return $this->redirect(['index', 'id' => $model->id]);
                 }else{
                     Yii::$app->getSession()->setFlash("error","新增失败");
                 }
@@ -106,9 +106,20 @@ class HospitalController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->validate()){
+                $model->region_id= $model->city;
+                if($model->save(false)){
+                    Yii::$app->getSession()->setFlash("success","修改成功");
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }else{
+                    Yii::$app->getSession()->setFlash("error","修改失败");
+                }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            }else{
+                Yii::$app->getSession()->setFlash("error",current($model->getFirstErrors()));
+            }
+
         } else {
             return $this->render('update', [
                 'model' => $model,

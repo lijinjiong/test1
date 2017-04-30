@@ -32,10 +32,25 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'mobile',
             'referrer',
-            'doc_id',
+            [
+                'label'=>'医生',
+                'attribute' => 'doc_id',
+                'value'=>function($model){
+                    return isset($model->doctor->username)?$model->doctor->username:"未知";
+                }
+            ],
             'note',
-            'add_time:datetime',
-            'reservation_time:datetime',
+            [
+                'label'=>'添加时间',
+                'attribute' => 'add_time',
+                'format' => ['date', 'Y-m-d H:i:s'],
+            ],
+            [
+                'label'=>'添加时间',
+                'attribute' => 'add_time',
+
+                'format' => ['date', 'Y-m-d H:i:s'],
+            ],
         ],
     ]) ?>
 

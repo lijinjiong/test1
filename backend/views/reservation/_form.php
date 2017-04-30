@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'referrer')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'doc_id')->textInput() ?>
-    <?= $form->field($model, 'status')->textInput() ?>
+    <?= $form->field($model, 'status')->dropDownList(Yii::$app->params["RESERVATION_STATUS"]) ?>
     <?= $form->field($model, 'note')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'add_time')->textInput() ?>

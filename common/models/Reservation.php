@@ -52,7 +52,7 @@ public function getDoctor(){
     public function attributeLabels()
     {
         return [
-            'id' => '预约姓名',
+            'id' => 'ID',
             'name' => '预约姓名',
             'mobile' => '预约手机号',
             'referrer' => '推荐人',
