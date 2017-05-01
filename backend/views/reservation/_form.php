@@ -30,8 +30,14 @@ use yii\widgets\ActiveForm;
         <label >添加时间</label>
         <div class="form-control" ><?=Yii::$app->formatter->asDate($model->add_time, 'yyyy-MM-dd H:i:s');?></div>
     </div>
-    <?= $form->field($model, 'reservation_time')->textInput() ?>
-
+   <!-- --><?/*= $form->field($model, 'reservation_time')->textInput() */?>
+    <?= $form->field($model, 'reservation_time')->widget(\kartik\datetime\DateTimePicker::classname(), [
+        'options' => ['placeholder' => ''],
+        'pluginOptions' => [
+            'autoclose' => true,     d
+            'todayHighlight' => true,
+        ]
+    ]); ?>
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>

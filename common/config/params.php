@@ -45,5 +45,5 @@ return [
         3=>"三级",
     ],
     //心联后台地址
-    "XINLIAN_BACK"=>"http://xinlian.com/",
+    "XINLIAN_BACK"=>"http://xinlian.com",
 ];

@@ -3,14 +3,19 @@ namespace api\controllers;
 
 
 
+use common\models\Banner;
 use common\models\Department;
 
 class SiteController extends ControllerBase {
 
-/*测试专用*/
+/*首页接口*/
+
     public function actionIndex(){
+        $banner_type=\Yii::$app->request->post("banner_type",1);
+        $banner_list=Banner::getIndexBanner();
 
-
-     return array_keys(Department::find()->select("id")->indexBy("id")->asArray()->all());
+        return [
+            "carouselList"=>$banner_list,
+        ];
     }
 }

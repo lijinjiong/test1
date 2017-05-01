@@ -15,6 +15,7 @@ use Yii;
 class Banner extends \yii\db\ActiveRecord
 {
     public $img;
+
     /**
      * @inheritdoc
      */
@@ -48,9 +49,21 @@ class Banner extends \yii\db\ActiveRecord
             'banner_type' => '类型',
         ];
     }
-    public static function dropDown ($column, $value = null) {
+
+    public static function getIndexBanner()
+    {
+        $banner = Banner::find()->where(["banner_type" => 1])->select("banner_img")->column();
+        foreach ($banner as $k => $v) {
+            $banner[$k] = Yii::$app->params["XINLIAN_BACK"] . $v;
+        }
+        return $banner;
+    }
+
+
+    public static function dropDown($column, $value = null)
+    {
         $dropDownList = [
-            'banner_type'=>Yii::$app->params["BANNER_TYPE"]
+            'banner_type' => Yii::$app->params["BANNER_TYPE"]
         ];
         //根据具体值显示对应的值
         if ($value !== null)
