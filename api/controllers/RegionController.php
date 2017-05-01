@@ -16,7 +16,7 @@ class RegionController extends ControllerBase
     /*根据parent_id获取联动地区*/
     public function actionGetRegion(){
         $parent_id=\Yii::$app->request->get("parent_id",0);
-        $data=Region::find()->where(["parent_id"=>$parent_id])
+        $data=Region::find()->where(["parent_id"=>(int)$parent_id])
             ->select("id,name")
             ->asArray()
             ->all();

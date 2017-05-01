@@ -9,6 +9,8 @@
 namespace api\controllers;
 use api\models\Doctor;
 use api\models\DoctorForm;
+use common\models\Department;
+use common\models\HospitalRegion;
 use Yii;
 
 class DoctorController extends ControllerBase
@@ -30,20 +32,21 @@ class DoctorController extends ControllerBase
     }
 
     public function actionDoctorList(){
-        $search=Yii::$app->request->get("search_name","");
+        $search=Yii::$app->request->post("search_name","");
         $filter['search_name']=Doctor::dealSearch($search);
-        $filter['department_id']=Yii::$app->request->get("department_id","");
-        $filter['city']=Yii::$app->request->get("city","");
-        $filter['hospital_id']=Yii::$app->request->get("hospital_id","");
-        $filter['level']=Yii::$app->request->get("level","");
-        $start=Yii::$app->request->get("start",1);
-        $limit=Yii::$app->request->get("limit",12);
+        $filter['department_id']=Yii::$app->request->post("department_id","");
+        $filter['city']=Yii::$app->request->post("city","");
+        $filter['hospital_id']=Yii::$app->request->post("hospital_id","");
+        $filter['level']=Yii::$app->request->post("level","");
+        $start=Yii::$app->request->post("start",1);
+        $limit=Yii::$app->request->post("limit",12);
         $data=Doctor::doctorList($filter,$start,$limit);
         return [
             "code"=>1,
             "message"=>"",
             "data"=>$data["data"],
-            "count"=>$data["count"]
+            "count"=>$data["count"],
+
         ];
     }
     public function actionDetail(){
@@ -51,6 +54,16 @@ class DoctorController extends ControllerBase
         $data=Doctor::detail($id);
         $data["code"]=1;
         $data["message"]="";
+        $data['recommend']=Doctor::findIndexDoctor(4);
         return $data;
+    }
+    public function actionFilter(){
+
+        $data["department"]=Department::getFullDepartment();
+        $data["areaList"]=HospitalRegion::getFilterRegion();
+       return[ "code"=>1,
+            "message"=>"",
+            "data"=>$data,
+        ];
     }
 }

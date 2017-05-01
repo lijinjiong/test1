@@ -17,20 +17,16 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'mobile')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'referrer')->textInput(['maxlength' => true]) ?>
-<<<<<<< HEAD
 
     <?= $form->field($model, 'doc_id')->textInput() ?>
-    <?= $form->field($model, 'status')->dropDownList(Yii::$app->params["RESERVATION_STATUS"]) ?>
-=======
+
     <div class="form-group">
         <label >医生</label>
         <div class="form-control" ><?=$model->doctor->username?></div>
     </div>
    <!-- --><?/*= $form->field($model, 'doc_id')->textInput() */?>
     <?= $form->field($model, 'status')->textInput() ?>
->>>>>>> ljj
     <?= $form->field($model, 'note')->textInput(['maxlength' => true]) ?>
-
    <!-- --><?/*= $form->field($model, 'add_time')->textInput() */?>
     <div class="form-group">
         <label >添加时间</label>
@@ -40,7 +36,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'reservation_time')->widget(\kartik\datetime\DateTimePicker::classname(), [
         'options' => ['placeholder' => ''],
         'pluginOptions' => [
-            'autoclose' => true,     d
+            'autoclose' => true,
             'todayHighlight' => true,
         ]
     ]); ?>

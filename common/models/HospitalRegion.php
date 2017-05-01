@@ -35,6 +35,22 @@ class HospitalRegion extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function getFilterRegion(){
+       $re= self::find()->select("city")->with(
+            ["hospital"=>function($q){
+                $q->select("id,name,region_id");
+            },
+                "city"
+        ]
+        )->asArray()->all();
+        foreach($re as $k=>$v){
+            $re[$k]["id"]=$v["city"]["id"];
+            $re[$k]["name"]=$v["city"]["name"];
+            unset($re[$k]["city"]);
+            $re[$k]["hospital"]=$v["hospital"];
+        }
+        return $re;
+    }
     /**
      * @inheritdoc
      */
@@ -61,7 +77,10 @@ class HospitalRegion extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Region::className(), ["id" => "city"]);
     }
-
+    public function getHospital()
+    {
+        return $this->hasMany(Hospital::className(), ["region_id" => "city"]);
+    }
 
     public function attributeLabels()
     {

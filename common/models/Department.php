@@ -37,6 +37,20 @@ class Department extends \yii\db\ActiveRecord
     public function getParent(){
        return $this->hasOne(Department::className(),["id"=>"parent_id"]);
     }
+
+    public static function getFullDepartment(){
+        $par=self::find()->select("id,dep_name,parent_id")->indexBy("id")->asArray()->all();
+        $data=[];
+        foreach($par as $k =>$v){
+            if($v["parent_id"]==0){
+                $data[]=&$par[$k];
+            }else{
+                $par[$v["parent_id"]]["child"][]=$v;
+            }
+        }
+
+        return $data;
+    }
     /**
      * @inheritdoc
      */
