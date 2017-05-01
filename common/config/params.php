@@ -51,5 +51,5 @@ return [
         3=>"主治医生",
     ],
     //心联后台地址
-    "XINLIAN_BACK"=>"http://xinlian.com/",
+    "XINLIAN_BACK"=>"http://xinlian.com",
 ];
