@@ -81,9 +81,21 @@ class DoctorController extends Controller
         $departmentList=$department::find()->select('dep_name,id')->indexBy("id")->column();
         $model->add_time= time();
         if ($model->load(Yii::$app->request->post())) {
-            $model->img = UploadedFile::getInstance($model, 'img');
-            $model->img->saveAs($url='img/banner/' . date("YmdHis").$model->img->baseName . '.' . $model->img->extension);
-            $model->banner_img = "/".$url; 
+            $model->id_card_front = UploadedFile::getInstance($model, 'id_card_front');
+            $model->id_card_front->saveAs($url='img/doctor/' . date("YmdHis").$model->id_card_front->baseName . '.' . $model->id_card_front->extension);
+            $model->id_card_front = "/".$url; 
+            $model->id_card_back = UploadedFile::getInstance($model, 'id_card_back');
+            $model->id_card_back->saveAs($url='img/doctor/' . date("YmdHis").$model->id_card_back->baseName . '.' . $model->id_card_back->extension);
+            $model->id_card_back = "/".$url; 
+            $model->doc_certification = UploadedFile::getInstance($model, 'doc_certification');
+            $model->doc_certification->saveAs($url='img/doctor/' . date("YmdHis").$model->doc_certification->baseName . '.' . $model->doc_certification->extension);
+            $model->doc_certification = "/".$url; 
+            $model->practicing_certificate = UploadedFile::getInstance($model, 'practicing_certificate');
+            $model->practicing_certificate->saveAs($url='img/doctor/' . date("YmdHis").$model->practicing_certificate->baseName . '.' . $model->practicing_certificate->extension);
+            $model->practicing_certificate = "/".$url; 
+            $model->highest_professional = UploadedFile::getInstance($model, 'highest_professional');
+            $model->highest_professional->saveAs($url='img/doctor/' . date("YmdHis").$model->highest_professional->baseName . '.' . $model->highest_professional->extension);
+            $model->highest_professional = "/".$url; 
             if ($model->save(false)){
                  Yii::$app->getSession()->setFlash('success', '创建成功');
                 return $this->redirect(['index', 'id' => $model->id]);
