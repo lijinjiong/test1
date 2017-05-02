@@ -38,20 +38,65 @@ $this->params['breadcrumbs'][] = $this->title;
             'open_bank',
             'department_id',
             'skill_disease',
-            'id_card_front',
-            'id_card_back',
-            'doc_certification',
-            'practicing_certificate',
-            'highest_professional',
+               [
+                'format' => [
+                    'image',['width'=>'130px','height'=>'110px',]
+                ],
+                'label' => '身份证正面',
+                'value' => function ($model) {
+                    return $model->id_card_front;
+                }
+
+            ],
+            [
+                'format' => [
+                    'image',['width'=>'130px','height'=>'110px',]
+                ],
+                'label' => '身份证反面',
+                'value' => function ($model) {
+                    return $model->id_card_back;
+                }
+
+            ],
+             [
+                'format' => [
+                    'image',['width'=>'130px','height'=>'110px',]
+                ],
+                'label' => '医师资格证',
+                'value' => function ($model) {
+                    return $model->doc_certification;
+                }
+
+            ],
+              [
+                'format' => [
+                    'image',['width'=>'130px','height'=>'110px',]
+                ],
+                'label' => '医师执业证',
+                'value' => function ($model) {
+                    return $model->practicing_certificate;
+                }
+
+            ],
+             [
+                'format' => [
+                    'image',['width'=>'130px','height'=>'110px',]
+                ],
+                'label' => '最高职称',
+                'value' => function ($model) {
+                    return $model->highest_professional;
+                }
+
+            ],
             'add_time:datetime',
             'verify_time:datetime',
             'status',
             'show_index',
             'mobile',
             'age',
-            'province_id',
-            'city_id',
-            'area_id',
+            'province',
+            'city',
+            'district',
             'address',
             'practice_experience',
             'academic_post',

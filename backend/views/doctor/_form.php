@@ -34,11 +34,11 @@ use kartik\date\DatePicker;
 
     <?= $form->field($model, 'id_card_back')->fileInput()->hint('请选择身份证反面照片')->label('身份证反面') ?>
 
-    <?= $form->field($model, 'doc_certification')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'doc_certification')->fileInput()->hint('请选择医师资格证照片')->label('请选择医师资格证照片') ?>
 
-    <?= $form->field($model, 'practicing_certificate')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'practicing_certificate')->fileInput()->hint('请选择医师执业证照片')->label('请选择医师执业证照片') ?>
 
-    <?= $form->field($model, 'highest_professional')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'highest_professional')->fileInput()->hint('请选择最高职称照片')->label('请选择最高职称照片')  ?>
 <?php if(!$model->isNewRecord){?>
      <?= $form->field($model, 'show_index')->dropDownList(yii::$app->params['show_index']) ?>
 <?PHP }?>
