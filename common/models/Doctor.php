@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 
+
 /**
  * This is the model class for table "xl_doctor".
  *
@@ -48,16 +49,20 @@ class Doctor extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    
+
     /*
      * 获取科室名称
      */
-    public function getDepartment(){
+    public function getDepartment()
+    {
         return $this->hasOne(Department::className(), ['id' => 'department_id']);
     }
-    public function getCity(){
+
+    public function getCity()
+    {
         return $this->hasOne(Region::className(), ['id' => 'city']);
     }
+
     public function rules()
     {
         return [
@@ -72,6 +77,7 @@ class Doctor extends \yii\db\ActiveRecord
             [['practice_experience', 'academic_post'], 'string', 'max' => 1000],
         ];
     }
+
 
     /**
      * @inheritdoc
@@ -106,8 +112,8 @@ class Doctor extends \yii\db\ActiveRecord
             'address' => '街道地址',
             'practice_experience' => '执业经历',
             'academic_post' => '学术任职',
-            'hospital_id'=>'医院ID',
-            "hospital"=>"医院名称",
+            'hospital_id' => '医院ID',
+            "hospital" => "医院名称",
         ];
     }
 }

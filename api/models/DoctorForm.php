@@ -8,8 +8,9 @@
 
 namespace api\models;
 
-
+use Yii;
 use yii\base\UserException;
+use common\help\Tool;
 
 class DoctorForm extends Doctor
 {
@@ -38,9 +39,58 @@ class DoctorForm extends Doctor
     }
 
     /*医生加盟方法*/
-    public  function addDoctor($data,$files){
+    public  function addDoctor($data,$file){
         if($this->load($data,"")&&$this->validate()){
-
+            if (!empty($file['id_card_front'])) {
+                $picture = Tool::upload($file['id_card_front'], $head=Yii::getAlias('@backend') . "/web/",$path = 'img/doctor/id_card');
+                if (is_string($picture)) {
+                    throw new UserException($picture);
+           }
+                $this->id_card_front=$picture[1];
+              /*  return ["code"=>1,"path"=>$picture[1]];*/
+            }else{
+                throw new UserException("请上传身份证正面");
+       }
+            if (!empty($file['id_card_back'])) {
+                $picture = Tool::upload($file['id_card_back'], $head=Yii::getAlias('@backend') . "/web/",$path = 'img/doctor/id_card');
+                if (is_string($picture)) {
+                    throw new UserException($picture);
+                }
+                $this->id_card_back=$picture[1];
+                /*  return ["code"=>1,"path"=>$picture[1]];*/
+            }else{
+                throw new UserException("请上传身份证反面");
+            }
+            if (!empty($file['doc_certification'])) {
+                $picture = Tool::upload($file['doc_certification'], $head=Yii::getAlias('@backend') . "/web/",$path = 'img/doctor/doc_certification');
+                if (is_string($picture)) {
+                    throw new UserException($picture);
+                }
+                $this->doc_certification=$picture[1];
+                /*  return ["code"=>1,"path"=>$picture[1]];*/
+            }else{
+                throw new UserException("请上传医生资格证");
+            }
+            if (!empty($file['practicing_certificate'])) {
+                $picture = Tool::upload($file['practicing_certificate'], $head=Yii::getAlias('@backend') . "/web/",$path = 'img/doctor/practicing_certificate');
+                if (is_string($picture)) {
+                    throw new UserException($picture);
+                }
+                $this->practicing_certificate=$picture[1];
+                /*  return ["code"=>1,"path"=>$picture[1]];*/
+            }else{
+                throw new UserException("请上传医师资格证");
+            }
+            if (!empty($file['highest_professional'])) {
+                $picture = Tool::upload($file['highest_professional'], $head=Yii::getAlias('@backend') . "/web/",$path = 'img/doctor/highest_professional');
+                if (is_string($picture)) {
+                    throw new UserException($picture);
+                }
+                $this->highest_professional=$picture[1];
+                /*  return ["code"=>1,"path"=>$picture[1]];*/
+            }else{
+                throw new UserException("请上传最高专业职称证");
+            }
             /*处理图片*/
             /*保存*/
             if($this->save(false)){
